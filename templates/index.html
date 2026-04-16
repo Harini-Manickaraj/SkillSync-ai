@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkillSync AI</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #4f46e5, #06b6d4);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 30px;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1000px;
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+            color: white;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        form {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+
+        input {
+            flex: 1;
+            min-width: 250px;
+            padding: 15px;
+            border: none;
+            border-radius: 12px;
+            outline: none;
+            font-size: 16px;
+        }
+
+        button {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 12px;
+            background: #ffffff;
+            color: #4f46e5;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+            background: #f3f4f6;
+        }
+
+        .results {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: rgba(255,255,255,0.2);
+            border-radius: 16px;
+            padding: 20px;
+            transition: 0.3s;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card h3 {
+            margin-bottom: 10px;
+            font-size: 1.4rem;
+        }
+
+        .card p {
+            margin-bottom: 8px;
+            line-height: 1.5;
+        }
+
+        .card a {
+            display: inline-block;
+            margin-top: 10px;
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            border-bottom: 2px solid white;
+        }
+
+        .why {
+            margin-top: 12px;
+            padding: 10px;
+            background: rgba(255,255,255,0.15);
+            border-radius: 10px;
+            font-size: 14px;
+        }
+
+        @media(max-width:768px){
+            .header h1 {
+                font-size: 2rem;
+            }
+            form {
+                flex-direction: column;
+            }
+            button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h1>SkillSync AI 🚀</h1>
+        <p>Find the best GitHub mentors & teammates for your project</p>
+    </div>
+
+    <form method="POST">
+        <input type="text" name="domain" placeholder="Enter project domain (Healthcare, Education...)" required>
+        <input type="text" name="tech" placeholder="Enter tech stack (ML, DL, Flask...)" required>
+        <button type="submit">Find Team</button>
+    </form>
+
+    {% if recommendations %}
+    <div class="results">
+        {% for user in recommendations %}
+        <div class="card">
+            <h3>{{ user.owner }}</h3>
+            <p><strong>Project:</strong> {{ user.repo_name }}</p>
+            <p><strong>Description:</strong> {{ user.description }}</p>
+            <p><strong>⭐ Stars:</strong> {{ user.stars }}</p>
+            <a href="{{ user.url }}" target="_blank">View Project →</a>
+
+            <div class="why">
+                <strong>Why recommended?</strong><br>
+                Has real GitHub experience in your selected domain and tech stack.
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+</div>
+
+</body>
+</html>
